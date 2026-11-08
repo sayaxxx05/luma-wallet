@@ -1,0 +1,17 @@
+digraph UseCase {
+ graph [label="USE CASE — Luma Wallet",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.55,pad=.4,nodesep=.6,bgcolor="white"];
+ node [fontname="DejaVu Sans",fontsize=12,color="#222222"];edge [fontname="DejaVu Sans",fontsize=10,color="#333333",arrowhead=none];
+ user [shape=box,label="Пользователь"];
+ meta [shape=box,label="MetaMask"];
+ subgraph cluster_project{label="Luma Wallet";fontname="DejaVu Sans";style="rounded";
+ a [shape=ellipse,label="Смотреть баланс"];
+ b [shape=ellipse,label="Подключить кошелёк"];
+ c [shape=ellipse,label="Отправить ETH"];
+ d [shape=ellipse,label="Получить адрес / QR"];
+ e [shape=ellipse,label="Создать платёжную ссылку"];
+ f [shape=ellipse,label="Просмотреть историю"];
+ g [shape=ellipse,label="Тестовый перевод (demo)"];
+ }
+ user -> {a b c d e f g};
+ meta -> {b c a};
+}

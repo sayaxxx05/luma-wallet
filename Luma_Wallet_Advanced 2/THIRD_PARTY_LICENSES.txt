@@ -1,0 +1,6 @@
+QR encoding library: QRCode for JavaScript by Kazuhiko Arase (c) 2009
+Original source: http://www.d-project.com/
+MIT License: https://opensource.org/licenses/MIT
+
+Bundled via qrcode-terminal (c) Gord Tanner et al.
+Apache License, Version 2.0: https://www.apache.org/licenses/LICENSE-2.0

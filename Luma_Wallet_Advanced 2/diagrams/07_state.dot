@@ -1,0 +1,23 @@
+digraph State {
+ graph [label="STATE DIAGRAM — Transaction lifecycle",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.8,nodesep=.5,pad=.4,bgcolor="white"];
+ node [shape=box,style="rounded",fontname="DejaVu Sans",fontsize=12,color="#222222",margin=".16,.12"];
+ edge [fontname="DejaVu Sans",fontsize=11,color="#222222"];
+ init [shape=circle,width=.2,label="",style=filled,fillcolor=black];
+ draft [label="Draft\nформа заполнена"];
+ confirm [label="Awaiting Wallet Approval"];
+ cancel [label="Cancelled\nотказ MetaMask"];
+ pending [label="Pending\nhash сохранён"];
+ confirmed [label="Success\nreceipt.status = 1"];
+ failed [label="Failed\nreceipt.status = 0"];
+ demo [label="Demo Success\nучебная операция"];
+ end [shape=doublecircle,width=.25,label="",style=filled,fillcolor=black];
+ init -> draft;
+ draft -> confirm [label="real / validated"];
+ draft -> demo [label="demo / validated"];
+ confirm -> cancel [label="reject"];
+ confirm -> pending [label="approve + hash"];
+ pending -> pending [label="receipt = null"];
+ pending -> confirmed [label="receipt = 0x1"];
+ pending -> failed [label="receipt = 0x0"];
+ demo -> end;cancel -> end;confirmed -> end;failed -> end;
+}

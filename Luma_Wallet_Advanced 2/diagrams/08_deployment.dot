@@ -1,0 +1,14 @@
+digraph Deployment {
+ graph [label="DEPLOYMENT — Luma Wallet on Render",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.9,pad=.5,bgcolor="white"];
+ node [shape=box,style="rounded",fontname="DejaVu Sans",fontsize=13,margin=".22,.14",color="#222222"];
+ edge [fontname="DejaVu Sans",fontsize=11,color="#222222"];
+ dev [label="Developer\nGitHub repository"];
+ render [label="Cloud: Render Static Site\nHTML + CSS + JS via HTTPS"];
+ browser [label="Client browser\nApp UI + localStorage"];
+ mask [label="MetaMask\nEIP-1193 + private keys"];
+ rpc [label="Ethereum / Sepolia network"];
+ dev -> render [label="deploy on git push"];
+ render -> browser [label="HTTPS static assets"];
+ browser -> mask [label="RPC requests"];
+ mask -> rpc [label="signed transactions"];
+}

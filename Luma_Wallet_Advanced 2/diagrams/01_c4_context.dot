@@ -1,0 +1,13 @@
+digraph C4Context {
+ graph [label="C4 — SYSTEM CONTEXT | Luma Wallet",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=1.0,pad=0.4,bgcolor="white"];
+ node [shape=box,style="rounded,filled",fillcolor="white",color="#303030",fontname="DejaVu Sans",fontsize=14,margin=".25,.20",penwidth=1.5];edge [fontname="DejaVu Sans",fontsize=11,color="#333333",arrowsize=.7];
+ user [shape=ellipse,label="Плательщик / получатель\n(пользователь)"];
+ luma [label="LUMA WALLET\nучебная система Web3\nбаланс, перевод, QR, история",penwidth=2.5];
+ metamask [label="MetaMask\nподключение, подпись\nи подтверждение"];
+ chain [label="Ethereum / Sepolia\nблокчейн-сеть"];
+ host [label="Render Static Site\nоблачный хостинг"];
+ user -> luma [label="открывает сайт, вводит платёж"];
+ luma -> metamask [label="EIP-1193 JSON-RPC"];
+ metamask -> chain [label="передаёт транзакцию"];
+ host -> luma [label="доставляет HTML/CSS/JS",style=dashed];
+}

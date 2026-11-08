@@ -1,0 +1,19 @@
+digraph Class {
+ graph [label="CLASS DIAGRAM — SOLID architecture",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.7,nodesep=.65,pad=.35,bgcolor="white",splines=polyline];
+ node [shape=record,fontname="DejaVu Sans",fontsize=11,color="#222222",penwidth=1.3,style="filled",fillcolor="white"];edge [fontname="DejaVu Sans",fontsize=9,color="#333333",arrowsize=.7];
+ storage [label="{JsonStorage|+ get(key, fallback)\l+ set(key, value)\l}"];
+ repo [label="{TransactionRepository|- storage: JsonStorage\l|+ list(key)\l+ save(key, items)\l+ prepend(key, tx)\l}"];
+ validator [label="{PaymentValidator|+ isAddress(value)\l+ parseEthToWei(amount)\l+ assertTransfer(payload)\l}"];
+ gateway [label="{Eip1193Gateway|- providerSource\l|+ connect()\l+ snapshot()\l+ sendNative(tx)\l+ receipt(hash)\l}"];
+ base [label="{PaymentProcessor (abstract)|+ send(payload)\l}"];
+ real [label="{EthereumPaymentProcessor|- gateway: Eip1193Gateway\l- transactions: TransactionRepository\l|+ send(payload)\l+ reconcile(key)\l}"];
+ demo [label="{DemoPaymentProcessor|+ send(payload)\l}"];
+ ui [label="{AppController (app.js)|- state: WalletState\l|+ render()\l+ submitForm()\l+ refreshWallet()\l}"];
+ repo -> storage [label="uses",arrowhead=vee];
+ real -> repo [label="inject",arrowhead=vee];
+ real -> gateway [label="inject",arrowhead=vee];
+ real -> validator [style=dashed,arrowhead=vee];
+ demo -> validator [style=dashed,arrowhead=vee];
+ real -> base [arrowhead=empty,label="extends"];demo -> base [arrowhead=empty,label="extends"];
+ ui -> base [arrowhead=vee];ui -> validator [style=dashed,arrowhead=vee];
+}

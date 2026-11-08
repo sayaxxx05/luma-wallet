@@ -1,0 +1,26 @@
+digraph Activity {
+ graph [label="ACTIVITY — Отправка ETH",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.6,pad=.3,bgcolor="white"];
+ node [shape=box,style="rounded",fontname="DejaVu Sans",fontsize=12,margin=".16,.12",color="#222222"];edge [fontname="DejaVu Sans",fontsize=10,color="#222222",arrowsize=.65];
+ start [shape=circle,width=.18,label="",style=filled,fillcolor="black"];
+ form [label="Ввести адрес и сумму"];
+ valid [shape=diamond,label="Данные\nкорректны?"];
+ error [label="Показать ошибку"];
+ mode [shape=diamond,label="Demo или\nMetaMask?"];
+ demo [label="Списать учебный баланс\nЗаписать demo операцию"];
+ gas [shape=diamond,label="Средств хватает\nс учётом gas?"];
+ confirm [label="Показать окно MetaMask"];
+ approved [shape=diamond,label="Пользователь\nподтвердил?"];
+ pending [label="Отправить в сеть\nСохранить hash / Pending"];
+ receipt [label="Проверить receipt\nSuccess / Failed"];
+ rejected [label="Отмена без списания"];
+ finish [shape=doublecircle,width=.22,label="",style=filled,fillcolor="black"];
+ start -> form -> valid;
+ valid -> error [label="нет"];error -> form;
+ valid -> mode [label="да"];
+ mode -> demo [label="demo"];demo -> finish;
+ mode -> gas [label="MetaMask"];
+ gas -> error [label="нет"];gas -> confirm [label="да"];
+ confirm -> approved;
+ approved -> rejected [label="нет"];rejected -> finish;
+ approved -> pending [label="да"];pending -> receipt -> finish;
+}

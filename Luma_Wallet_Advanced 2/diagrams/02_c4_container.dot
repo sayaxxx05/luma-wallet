@@ -1,0 +1,19 @@
+digraph C4Container {
+ graph [label="C4 — CONTAINER | Browser + wallet + cloud",labelloc=t,fontsize=22,fontname="DejaVu Sans",ranksep=.9,pad=0.45,bgcolor="white",nodesep=.6];
+ node [shape=box,style="rounded,filled",fillcolor="white",color="#222222",fontname="DejaVu Sans",fontsize=13,margin=".2,.16",penwidth=1.4];edge [fontname="DejaVu Sans",fontsize=11,color="#333333",arrowsize=.7];
+ user [shape=ellipse,label="Пользователь"];
+ subgraph cluster_browser{label="БРАУЗЕР";fontname="DejaVu Sans";style="rounded,dashed"; color="#666666";
+ ui [label="UI (index.html, app.js)\nпросмотр, формы, история"];
+ core [label="Core (wallet-core.js)\nвалидатор / процессоры / gateway"];
+ store [shape=cylinder,label="localStorage\nдемо / локальная история"];
+ wallet [label="MetaMask extension\nуправление ключами"];
+ ui -> core [label="вызов сервисов"];
+ core -> store [label="репозиторий"];
+ core -> wallet [label="EIP-1193"];
+ }
+ render [label="Render CDN\nстатические файлы"];
+ ethereum [label="Ethereum / Sepolia\nузлы сети"];
+ user -> ui [label="HTTPS"];
+ render -> ui [label="раздаёт файлы",style=dashed];
+ wallet -> ethereum [label="JSON-RPC + подпись"];
+}

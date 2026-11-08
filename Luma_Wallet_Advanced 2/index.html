@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f0">
+  <meta name="description" content="Luma Wallet — учебный криптокошелёк с поддержкой MetaMask и деморежимом.">
+  <title>Luma — криптокошелёк</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="qr-vendor.js" defer></script>
+  <script src="wallet-core.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M4 17v3h16v-3"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 9V6a2 2 0 0 1 2-2h12"/><path d="M17 13h4"/><circle cx="16.5" cy="13" r=".6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 19 14-14M8 5h11v11"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="m19 5-14 14M16 19H5V8"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-12h-7l0-8Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M10 14 20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2.3-2.5 4.5M12 17h.01"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5Z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L3 9"/><path d="M3 3v6h6"/><path d="M4 13a8 8 0 0 0 14.3 4.9L21 15"/><path d="M21 21v-6h-6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </svg>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-logo"><span></span><span></span><span></span></div><div>luma<span class="brand-dot">.</span><small>WALLET</small></div></div>
+      <div class="side-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <nav class="navigation" aria-label="Основное меню">
+        <button class="nav-link active" data-view="overview"><svg class="icon"><use href="#i-grid"/></svg><span>Обзор</span></button>
+        <button class="nav-link" data-view="send"><svg class="icon"><use href="#i-send"/></svg><span>Отправить</span></button>
+        <button class="nav-link" data-view="receive"><svg class="icon"><use href="#i-download"/></svg><span>Получить</span></button>
+        <button class="nav-link" data-view="activity"><svg class="icon"><use href="#i-history"/></svg><span>История</span></button>
+      </nav>
+      <div class="sidebar-grow"></div>
+      <div class="help-card"><div class="help-symbol"><svg class="icon"><use href="#i-shield"/></svg></div><strong>Ключи под вашим контролем</strong><p>Luma не запрашивает seed-фразы и не хранит приватные ключи.</p><button id="helpBtn">Как это работает <svg class="icon"><use href="#i-chevron"/></svg></button></div>
+      <div class="sidebar-footer"><span class="live-dot"></span><span>Учебный проект · v1.0</span></div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="mobile-brand"><button id="menuBtn" class="icon-button" aria-label="Открыть меню"><svg class="icon"><use href="#i-menu"/></svg></button><strong>luma<span class="brand-dot">.</span></strong></div>
+        <div class="breadcrumb">Личный кабинет <svg class="icon"><use href="#i-chevron"/></svg> <strong id="breadcrumbCurrent">Обзор</strong></div>
+        <div class="top-actions"><span class="network-tag" id="networkTag"><span class="status-pulse"></span><span id="networkText">Демо · Sepolia</span></span><button class="wallet-control" id="walletBtn"><svg class="icon"><use href="#i-wallet"/></svg><span id="walletBtnText">Подключить MetaMask</span></button><div class="avatar" aria-label="Профиль">LW</div></div>
+      </header>
+
+      <div class="page-container">
+        <div class="demo-banner" id="demoBanner"><svg class="icon"><use href="#i-info"/></svg><div><b>Демонстрационный режим.</b> Все суммы и переводы здесь учебные, реальные криптовалюты не используются.</div><button id="switchRealBtn">Подключить кошелёк <svg class="icon"><use href="#i-arrow-up"/></svg></button></div>
+
+        <section class="view active" id="view-overview" aria-label="Обзор">
+          <div class="page-heading"><div><p class="eyebrow">ВАШ ФИНАНСОВЫЙ ЦЕНТР</p><h1>Деньги под контролем<span class="point">.</span></h1><p class="heading-desc">Удобный способ управлять криптовалютой в одном месте.</p></div><div class="date-pill" id="datePill"></div></div>
+
+          <div class="hero-grid">
+            <div class="balance-card"><div class="balance-glow one"></div><div class="balance-glow two"></div><div class="card-top"><span>ОБЩИЙ БАЛАНС</span><div class="eth-icon">◆</div></div><div class="balance-value"><span id="heroBalance">2.8450</span><span class="currency-unit">ETH</span></div><p id="heroSub">Ваш демонстрационный Ethereum-кошелёк</p><div class="balance-graph"><svg viewBox="0 0 560 108" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ccebaa" stop-opacity=".22"/><stop offset="1" stop-color="#ccebaa" stop-opacity="0"/></linearGradient></defs><path d="M0 89 C35 90 42 43 83 69 S154 78 192 51 S242 65 285 47 343 32 378 51 438 45 481 20 538 28 560 10 V108 H0 Z" fill="url(#chartFill)"/><path d="M0 89 C35 90 42 43 83 69 S154 78 192 51 S242 65 285 47 343 32 378 51 438 45 481 20 538 28 560 10" fill="none" stroke="#d1f3b4" stroke-width="2.8" stroke-linecap="round"/></svg></div><div class="balance-footer"><div><span class="card-meta">СЕТЬ</span><strong id="heroNetwork">Sepolia · Тестовая</strong></div><div><span class="card-meta">СТАТУС</span><strong><span class="mini-dot"></span><span id="heroStatus">Демоаккаунт</span></strong></div><button class="round-arrow" data-view="activity" aria-label="Посмотреть историю"><svg class="icon"><use href="#i-arrow-up"/></svg></button></div></div>
+            <div class="quick-card"><div class="quick-top"><div class="quick-icon"><svg class="icon"><use href="#i-bolt"/></svg></div><span class="quick-label">БЫСТРЫЕ ДЕЙСТВИЯ</span></div><h2>Куда направим средства?</h2><p>Простой перевод в несколько кликов. Для реальной отправки используется MetaMask.</p><button class="quick-action primary-action" data-view="send"><span class="action-icon"><svg class="icon"><use href="#i-arrow-up"/></svg></span><span><b>Отправить</b><small>Перевод на другой адрес</small></span><svg class="icon chevron"><use href="#i-chevron"/></svg></button><button class="quick-action" data-view="receive"><span class="action-icon soft"><svg class="icon"><use href="#i-arrow-down"/></svg></span><span><b>Получить</b><small>Мой адрес и QR-код</small></span><svg class="icon chevron"><use href="#i-chevron"/></svg></button></div>
+          </div>
+
+          <div class="metric-grid"><div class="metric"><div class="metric-icon mint"><svg class="icon"><use href="#i-wallet"/></svg></div><div><small>Доступно</small><strong id="metricBalance">2.8450 ETH</strong><span>Текущий баланс</span></div></div><div class="metric"><div class="metric-icon peach"><svg class="icon"><use href="#i-send"/></svg></div><div><small>Отправлено</small><strong id="metricSent">0.0000 ETH</strong><span>Через Luma Wallet</span></div></div><div class="metric"><div class="metric-icon violet"><svg class="icon"><use href="#i-history"/></svg></div><div><small>Операции</small><strong id="metricCount">0</strong><span>Записаны в приложении</span></div></div></div>
+
+          <div class="section-grid"><div class="surface activity-preview"><div class="surface-heading"><div><h2>Последняя активность</h2><p>История ваших операций</p></div><button class="text-button" data-view="activity">Все операции <svg class="icon"><use href="#i-chevron"/></svg></button></div><div id="recentTransactions" class="transaction-list"></div></div><div class="surface address-card"><div class="surface-heading"><div><h2>Ваш адрес</h2><p>Для получения криптовалюты</p></div><span class="address-tag">EVM</span></div><div class="address-avatar"><div class="orb">✳</div><div><small>АДРЕС КОШЕЛЬКА</small><strong id="shortAddress">Демо-адрес</strong></div></div><div class="address-box"><span id="fullAddress">Подключите MetaMask</span><button id="copyHomeAddress" aria-label="Копировать адрес"><svg class="icon"><use href="#i-copy"/></svg></button></div><button class="outline-action" data-view="receive">Показать QR-код <svg class="icon"><use href="#i-arrow-up"/></svg></button></div></div>
+          <p class="legal-footer">Luma Wallet — учебный интерфейс Web3. Это не банк, биржа или сервис хранения средств.</p>
+        </section>
+
+        <section class="view" id="view-send" aria-label="Отправка">
+          <div class="page-heading"><div><p class="eyebrow">ПЕРЕВОДЫ</p><h1>Отправить криптовалюту<span class="point">.</span></h1><p class="heading-desc">Вводите адрес и сумму. В реальном режиме MetaMask попросит подтверждение.</p></div></div>
+          <div class="form-grid"><div class="surface form-card"><div class="form-card-header"><div class="circle-accent"><svg class="icon"><use href="#i-send"/></svg></div><div><h2>Новый перевод</h2><p>Ethereum / совместимый адрес EVM</p></div></div><form id="sendForm" novalidate><label for="sendTo">Адрес получателя</label><div class="input-row"><input id="sendTo" name="to" type="text" placeholder="0x..." spellcheck="false" autocomplete="off" maxlength="42" required><svg class="icon"><use href="#i-wallet"/></svg></div><div class="label-row"><label for="sendAmount">Сумма перевода</label><span>Доступно: <b id="formAvailable">2.8450 ETH</b></span></div><div class="input-row amount-row"><input id="sendAmount" name="amount" type="text" inputmode="decimal" placeholder="0.00" autocomplete="off" required><span>ETH</span></div><label for="sendNote">Примечание <span class="optional">(только в истории этого браузера)</span></label><div class="input-row"><input id="sendNote" name="note" type="text" placeholder="Например, оплата заказа" maxlength="70"></div><div class="form-info"><svg class="icon"><use href="#i-info"/></svg><span id="sendHint">Это деморежим: монеты ненастоящие, комиссия не списывается.</span></div><button class="solid-btn" type="submit"><span id="sendSubmitText">Перевести демо ETH</span><svg class="icon"><use href="#i-arrow-up"/></svg></button></form></div><div class="side-info"><div class="surface guide-card"><span class="guide-kicker">ПОНЯТНЫЕ ШАГИ</span><h2>Как проходит перевод?</h2><div class="guide-step"><span>01</span><div><strong>Укажите данные</strong><p>Введите адрес получателя и сумму в ETH.</p></div></div><div class="guide-step"><span>02</span><div><strong>Проверьте информацию</strong><p>Адрес и сеть должны совпадать с нужным кошельком.</p></div></div><div class="guide-step"><span>03</span><div><strong>Подтвердите действие</strong><p>При реальном переводе откроется MetaMask с сетевой комиссией.</p></div></div></div><div class="tip-card"><svg class="icon"><use href="#i-shield"/></svg><div><strong>Важно для безопасности</strong><p>Блокчейн-транзакцию обычно нельзя отменить. Никому не сообщайте seed-фразу.</p></div></div></div></div>
+        </section>
+
+        <section class="view" id="view-receive" aria-label="Получение">
+          <div class="page-heading"><div><p class="eyebrow">ПОПОЛНЕНИЕ</p><h1>Получить криптовалюту<span class="point">.</span></h1><p class="heading-desc">Поделитесь своим публичным адресом или QR-кодом.</p></div></div>
+          <div class="receive-layout"><div class="surface receive-card"><div class="receive-topicon"><svg class="icon"><use href="#i-download"/></svg></div><h2>Ваш адрес для получения</h2><p id="receiveSubtitle">Подключите MetaMask, чтобы получить реальный адрес.</p><div class="qr-area" id="qrArea"><canvas id="receiveQr" width="246" height="246" aria-label="QR-код адреса криптокошелька"></canvas><div class="qr-placeholder" id="qrPlaceholder"><svg class="icon"><use href="#i-wallet"/></svg><span>Подключите MetaMask<br>для QR-кода</span></div></div><div class="receive-address" id="receiveAddress">Демо-адрес не может получать реальные средства</div><button class="solid-btn" id="copyReceiveBtn"><svg class="icon"><use href="#i-copy"/></svg><span>Скопировать адрес</span></button><button class="flat-btn" id="copyPaymentLink"><svg class="icon"><use href="#i-link"/></svg><span>Скопировать ссылку для оплаты</span></button><div class="invoice-form"><h3>Запросить оплату</h3><p>Создайте ссылку с указанной суммой для клиента. Списание подтвердит плательщик в MetaMask.</p><label for="invoiceAmount">Сумма в ETH</label><input id="invoiceAmount" type="text" inputmode="decimal" placeholder="Например, 0.01"><label for="invoiceNote">Назначение платежа</label><input id="invoiceNote" type="text" placeholder="Оплата услуги" maxlength="70"><button class="flat-btn invoice-submit" id="copyInvoiceLink" type="button">Скопировать ссылку с суммой</button></div></div><div class="receive-explain"><div class="dark-tip"><svg class="icon"><use href="#i-spark"/></svg><h2>Просто. Быстро. Надёжно.</h2><p>Ваш публичный адрес можно безопасно отправить плательщику. Приватные ключи остаются в MetaMask.</p></div><div class="surface guide-card"><span class="guide-kicker">ПЕРЕД ПОЛУЧЕНИЕМ</span><div class="guide-step"><span>01</span><div><strong>Убедитесь в сети</strong><p>Отправитель должен использовать ту же сеть.</p></div></div><div class="guide-step"><span>02</span><div><strong>Проверьте валюту</strong><p>Этот экран предназначен для нативной валюты сети (ETH).</p></div></div><div class="guide-step"><span>03</span><div><strong>Дождитесь подтверждения</strong><p>Операция появится на блокчейне. В приложении отражаются отправки из Luma.</p></div></div></div></div></div>
+        </section>
+
+        <section class="view" id="view-activity" aria-label="История">
+          <div class="page-heading"><div><p class="eyebrow">АКТИВНОСТЬ</p><h1>История операций<span class="point">.</span></h1><p class="heading-desc">Переводы, начатые через Luma в этом браузере, и учебные демооперации.</p></div><button class="light-btn" id="refreshBtn"><svg class="icon"><use href="#i-refresh"/></svg>Обновить статусы</button></div>
+          <div class="surface history-card"><div class="history-toolbar"><div><h2>Ваши транзакции</h2><p id="historySubtitle">Локальная история переводов</p></div><div class="filter-pills"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="sent">Отправленные</button><button class="filter" data-filter="received">Полученные</button></div></div><div id="allTransactions" class="transaction-list history-list"></div><div class="history-foot"><svg class="icon"><use href="#i-info"/></svg>Не является полной историей блокчейн-адреса: для этого понадобится блокчейн-индексатор.</div></div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Закрыть"><svg class="icon"><use href="#i-close"/></svg></button><div class="modal-icon" id="modalIcon"><svg class="icon"><use href="#i-info"/></svg></div><h2 id="modalTitle"></h2><p id="modalText"></p><div id="modalDetails" class="modal-details"></div><div class="modal-actions"><button class="light-btn" id="modalCancel">Отмена</button><button class="solid-btn" id="modalConfirm">Подтвердить</button></div></div></div>
+  <div class="backdrop" id="sidebarBackdrop" hidden></div>
+</body>
+</html>
